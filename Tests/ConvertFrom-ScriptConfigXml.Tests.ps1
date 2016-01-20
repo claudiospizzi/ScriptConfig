@@ -1,12 +1,19 @@
 
-$Root = Split-Path -Parent $MyInvocation.MyCommand.Path | Join-Path -ChildPath '..' | Resolve-Path | Select-Object -ExpandProperty Path
-$Demo = Join-Path -Path $Root -ChildPath 'Examples' | Resolve-Path | Select-Object -ExpandProperty Path
+# Load module
+if ($Env:APPVEYOR -eq 'True')
+{
+    $Global:TestRoot = (Get-Module ScriptConfig -ListAvailable).ModuleBase
 
-$Global:PesterDemo = $Demo
+    Import-Module ScriptConfig -Force
+}
+else
+{
+    $Global:TestRoot = (Split-Path -Parent $MyInvocation.MyCommand.Path | Join-Path -ChildPath '..' | Resolve-Path).Path
 
-Import-Module "$Root\ScriptConfig.psd1" -Force
+    Import-Module "$Global:TestRoot\ScriptConfig.psd1" -Force
+}
 
-
+# Execute tests
 InModuleScope ScriptConfig {
 
     Describe 'ConvertFrom-ScriptConfigXml' {
@@ -19,7 +26,7 @@ InModuleScope ScriptConfig {
         $ResultArray           = @( 'Lorem', 'Ipsum' )
         $ResultHashtable       = @{ Foo = 'Bar'; Hello = 'World' }
 
-        $Content = Get-Content -Path "$Global:PesterDemo\XmlConfigDemo.ps1.config"
+        $Content = Get-Content -Path "$Global:TestRoot\Examples\XmlConfigDemo.ps1.config"
 
         It 'should be able to convert the example config file' {
 
