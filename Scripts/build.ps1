@@ -19,5 +19,5 @@ $ManifestPath = Join-Path -Path $Target -ChildPath "$Module.psd1"
 (Get-Content -Path $ManifestPath -Raw).Replace('0.0.0.0', $env:APPVEYOR_BUILD_VERSION) | Out-File -FilePath $ManifestPath
 
 # Push appveyor artifacts
-Compress-Archive -Path $Target -DestinationPath "$Source\$Module.zip"
-Push-AppveyorArtifact -Path "$Source\$Module.zip" -DeploymentName $Module
+Compress-Archive -Path $Target -DestinationPath "$Source\$Module-$env:APPVEYOR_BUILD_VERSION.zip"
+Push-AppveyorArtifact -Path "$Source\$Module-$env:APPVEYOR_BUILD_VERSION.zip" -DeploymentName $Module
