@@ -1,6 +1,6 @@
 
 # Load the default configuration file in INI format
-$Config = Get-ScriptConfig -Type INI
+$Config = Get-ScriptConfig -Format INI
 
 # Access the configuration settings
 Write-Host "String           :" $Config.MyString

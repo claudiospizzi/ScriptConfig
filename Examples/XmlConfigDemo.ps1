@@ -1,6 +1,6 @@
 
 # Load the default configuration file in XML format
-$Config = Get-ScriptConfig -Type XML
+$Config = Get-ScriptConfig -Format XML
 
 # Access the configuration settings
 Write-Host "String           :" $Config.MyString

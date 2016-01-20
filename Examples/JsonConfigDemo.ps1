@@ -1,6 +1,6 @@
 
 # Load the default configuration file in JSON format
-$Config = Get-ScriptConfig -Type JSON
+$Config = Get-ScriptConfig -Format JSON
 
 # Access the configuration settings
 Write-Host "String           :" $Config.MyString
