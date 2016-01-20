@@ -39,6 +39,9 @@
     <Compile Include="Functions\Get-ScriptConfig.ps1" />
     <Compile Include="ScriptConfig.psd1" />
     <Compile Include="ScriptConfig.psm1" />
+    <Compile Include="Scripts\build.ps1" />
+    <Compile Include="Scripts\publish.ps1" />
+    <Compile Include="Scripts\test.ps1" />
     <Compile Include="Tests\ConvertFrom-ScriptConfigIni.Tests.ps1" />
     <Compile Include="Tests\ConvertFrom-ScriptConfigJson.Tests.ps1" />
     <Compile Include="Tests\ConvertFrom-ScriptConfigXml.Tests.ps1" />
@@ -47,6 +50,7 @@
   <ItemGroup>
     <Folder Include="Examples\" />
     <Folder Include="Functions\" />
+    <Folder Include="Scripts\" />
     <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
