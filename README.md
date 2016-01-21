@@ -1,16 +1,17 @@
-![Build status](https://ci.appveyor.com/api/projects/status/p3qiywni2t288473/branch/master?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/master) ![Build status](https://ci.appveyor.com/api/projects/status/p3qiywni2t288473/branch/dev?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/dev)
+[![Build status](https://ci.appveyor.com/api/projects/status/48di0b0ml0aesj45/branch/master?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/master) [![Build status](https://ci.appveyor.com/api/projects/status/48di0b0ml0aesj45/branch/dev?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/dev)
 
 # ScriptConfig PowerShell Module
-PowerShell Module to handle configuration files for PowerShell Controller Scripts.
+PowerShell Module to handle configuration files for PowerShell controller scripts.
+
 
 ## Introduction
 
-With the ScriptConfig module, configuration data can be loaded inside a PowerShell script from a configuration file. Thanks to the module, it is no longer necessary to hardcode or paramter-pass the configuration data. Especialy usefull for scripts, which run unattended. The module support XML, JSON and INI format.
+With the ScriptConfig module, configuration data can be loaded into a PowerShell script from a file. Thanks to the module, it is no longer necessary to hardcode or paramter-pass the configuration data. Especialy usefull for scripts, which run unattended. The module support `XML`, `JSON` and `INI` formatted config files.
 
 
 ## Requirenments
 
-The following minimum requirenments are necessary, to use the module:
+The following minimum requirenments are necessary to use the module:
 
 * Windows PowerShell 3.0
 * Windows Server 2008 R2 / Windows 7
@@ -27,35 +28,34 @@ Install-Module ScriptConfig
 To install the module mannually, perform the following steps:
 
 1. Download the latest release ([here](https://github.com/claudiospizzi/ScriptConfig/releases)) 
-2. Extract the downloaded module to one of the module paths:
-   C:\Users\Claudio\Documents\WindowsPowerShell\Modules
-    C:\Program Files\WindowsPowerShell\Modules
-    C:\Windows\system32\WindowsPowerShell\v1.0\Modules
+2. Extract the downloaded module into one of the module paths (e.g. `C:\Users\[Usermame]\Documents\WindowsPowerShell\Modules`)
 
-	
+
 ## Cmdlets
 
-Currently, the module has just one cmdlet to load the configuration file:
+Currently, the module has just one single cmdlet, to load the configuration file:
 
-| Cmdlet             | Description                                   |
-| ------------------ | --------------------------------------------- |
-| Get-ScriptConfig   | Loads the configuration from a config file.   |
+| Cmdlet               | Description                                   |
+| -------------------- | --------------------------------------------- |
+| `Get-ScriptConfig`   | Loads the configuration from a config file.   |
 
 
 ## Supported Types
 
-The cmdlet supports multiple types. Depending on the format, the have to be specified differently.
+The cmdlet supports multiple types. Depending on the used format, the types have to be specified differently inside the config file.
 
-| Type        | Description                                                       |
-| ----------- | ----------------------------------------------------------------- |
-| String      | A settings is stored as a simple string by default.               |
-| Integer     | If the setting is an integer, it will be casted to it.            |
-| Boolean     | If you specify True or False, it will be returned as a boolean.   |
-| Array       | An array of strings can be specified.                             |
-| Hashtable   | A dictionary of key-value-pairs is supported too.                 |
+| Type        | Description                                                          |
+| ----------- | -------------------------------------------------------------------- |
+| String      | Default: A settings is stored as a simple string.                    |
+| Integer     | If the setting is an integer, it will be casted this type.           |
+| Boolean     | If you specify True or False, it will be casted to a boolean type.   |
+| Array       | An array of strings can be specified.                                |
+| Hashtable   | A dictionary of key-value-pairs is supported too, both setings.      |
 
 
 ## Supportet Formats
+
+The following formats are suppoted: `XML`, `JSON` and `INI`.
 
 ### XML
 
