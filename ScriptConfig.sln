@@ -7,6 +7,7 @@ Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "ScriptConfig", "ScriptConfi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EFAC8665-F634-4593-8058-38DD51604FC9}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection

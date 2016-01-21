@@ -40,7 +40,6 @@
     <Compile Include="ScriptConfig.psd1" />
     <Compile Include="ScriptConfig.psm1" />
     <Compile Include="Scripts\build.ps1" />
-    <Compile Include="Scripts\publish.ps1" />
     <Compile Include="Scripts\test.ps1" />
     <Compile Include="Tests\ConvertFrom-ScriptConfigIni.Tests.ps1" />
     <Compile Include="Tests\ConvertFrom-ScriptConfigJson.Tests.ps1" />
