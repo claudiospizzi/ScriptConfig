@@ -9,15 +9,8 @@ clone_folder: C:\Projects\ScriptConfig
 install: 
     - cinst -y pester --version 3.3.14
 
-# Module Version
-version: 1.0.{build}
-
-# Build only dev and master, tags
-skip_tags: true
-branches:
-  only:
-  - master
-  - dev
+# Build Number
+version: {build}
 
 # Execute build script
 build_script:
