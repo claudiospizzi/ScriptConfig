@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6cafc0c6-a428-4d30-a9f9-700e829fea51}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MyApplication</RootNamespace>
+    <AssemblyName>MyApplication</AssemblyName>
+    <Name>ScriptConfig</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Examples\IniConfigDemo.ps1" />
+    <Compile Include="Examples\IniConfigDemo.ps1.config" />
+    <Compile Include="Examples\JsonConfigDemo.ps1" />
+    <Compile Include="Examples\JsonConfigDemo.ps1.config" />
+    <Compile Include="Examples\XmlConfigDemo.ps1" />
+    <Compile Include="Examples\XmlConfigDemo.ps1.config" />
+    <Compile Include="Functions\ConvertFrom-ScriptConfigIni.ps1" />
+    <Compile Include="Functions\ConvertFrom-ScriptConfigJson.ps1" />
+    <Compile Include="Functions\ConvertFrom-ScriptConfigXml.ps1" />
+    <Compile Include="Functions\Get-ScriptConfig.ps1" />
+    <Compile Include="ScriptConfig.psd1" />
+    <Compile Include="ScriptConfig.psm1" />
+    <Compile Include="Scripts\build.ps1" />
+    <Compile Include="Scripts\test.ps1" />
+    <Compile Include="Tests\ConvertFrom-ScriptConfigIni.Tests.ps1" />
+    <Compile Include="Tests\ConvertFrom-ScriptConfigJson.Tests.ps1" />
+    <Compile Include="Tests\ConvertFrom-ScriptConfigXml.Tests.ps1" />
+    <Compile Include="Tests\Get-ScriptConfig.Tests.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\" />
+    <Folder Include="Functions\" />
+    <Folder Include="Scripts\" />
+    <Folder Include="Tests\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="Build" />
+</Project>
