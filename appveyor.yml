@@ -10,7 +10,7 @@ install:
     - cinst -y pester --version 3.3.14
 
 # Build Number
-version: {build}
+version: '{build}'
 
 # Execute build script
 build_script:
