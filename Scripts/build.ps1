@@ -14,10 +14,9 @@ Copy-Item -Path "$Source\Tests"        -Destination $Target -Recurse
 Copy-Item -Path "$Source\$Module.psd1" -Destination $Target
 Copy-Item -Path "$Source\$Module.psm1" -Destination $Target
 
-# Patch the manifest file
-$ManifestPath = Join-Path -Path $Target -ChildPath "$Module.psd1"
-(Get-Content -Path $ManifestPath -Raw).Replace('0.0.0.0', $env:APPVEYOR_BUILD_VERSION) | Out-File -FilePath $ManifestPath
+# Extract module version
+$ModuleVersion = (Invoke-Expression -Command (Get-Content -Path "$Target\$Module.psd1" -Raw)).ModuleVersion
 
 # Push appveyor artifacts
-Compress-Archive -Path $Target -DestinationPath "$Source\$Module-$env:APPVEYOR_BUILD_VERSION.zip"
-Push-AppveyorArtifact -Path "$Source\$Module-$env:APPVEYOR_BUILD_VERSION.zip" -DeploymentName $Module
+Compress-Archive -Path $Target -DestinationPath "$Source\$Module-$ModuleVersion-$env:APPVEYOR_BUILD_VERSION.zip"
+Push-AppveyorArtifact -Path "$Source\$Module-$ModuleVersion-$env:APPVEYOR_BUILD_VERSION.zip" -DeploymentName $Module
