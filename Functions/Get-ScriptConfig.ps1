@@ -34,11 +34,11 @@ function Get-ScriptConfig
     (
         [Parameter(Mandatory=$false)]
         [ValidateScript({Test-Path -Path $_})]
-        $Path = $Global:MyInvocation.MyCommand.Definition.Trim() + '.config',
+        [String] $Path = $Global:MyInvocation.MyCommand.Definition.Trim() + '.config',
 
         [Parameter(Mandatory=$false)]
         [ValidateSet('XML', 'JSON', 'INI')]
-        $Format = 'XML'
+        [String] $Format = 'XML'
     )
 
     # Only work with absolute path, makes error handling easier
