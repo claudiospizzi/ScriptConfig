@@ -1,4 +1,4 @@
-﻿@{
+@{
     RootModule         = 'ScriptConfig.psm1'
     ModuleVersion      = '1.0.0'
     GUID               = '0464897C-2F37-489F-93B2-7F6B9B582761'
