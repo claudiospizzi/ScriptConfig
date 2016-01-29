@@ -6,7 +6,7 @@ PowerShell Module to handle configuration files for PowerShell controller script
 
 ## Introduction
 
-With the ScriptConfig module, configuration data can be loaded into a PowerShell script from a file. Thanks to the module, it is no longer necessary to hardcode or paramter-pass the configuration data. Especialy usefull for scripts, which run unattended. The module support `XML`, `JSON` and `INI` formatted config files.
+With the ScriptConfig module, configuration data can be loaded into a PowerShell controller script from a dedicated config file. Thanks to the module, it is no longer necessary to hardcode or paramter-pass the configuration data. Especialy usefull for scripts, which run unattended. The module support `XML`, `JSON` and `INI` formatted config files.
 
 
 ## Requirenments
@@ -19,45 +19,60 @@ The following minimum requirenments are necessary to use the module:
 
 ## Installation
 
-Install the module automatically from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ScriptConfig):
+Install the module **automatically** from the [PowerShell Gallery](https://www.powershellgallery.com/packages/ScriptConfig) with PowerShell 5.0:
 
 ```powershell
 Install-Module ScriptConfig
 ```
 
-To install the module mannually, perform the following steps:
+To install the module **manually**, perform the following steps:
 
-1. Download the latest release ([here](https://github.com/claudiospizzi/ScriptConfig/releases)) 
-2. Extract the downloaded module into one of the module paths (e.g. `C:\Users\[Usermame]\Documents\WindowsPowerShell\Modules`)
+1. Download the latest release from [GitHub](https://github.com/claudiospizzi/ScriptConfig/releases) as a ZIP file
+2. Extract the downloaded module into one of your module paths ([TechNet: Installing Modules](https://technet.microsoft.com/en-us/library/dd878350))
 
 
 ## Cmdlets
 
-Currently, the module has just one single cmdlet, to load the configuration file:
+Currently, this module has just one cmdlet, which loads the configuration data from one config file:
 
-| Cmdlet               | Description                                   |
-| -------------------- | --------------------------------------------- |
-| `Get-ScriptConfig`   | Loads the configuration from a config file.   |
+| Cmdlet               | Description                                                                                        |
+| -------------------- | -------------------------------------------------------------------------------------------------- |
+| `Get-ScriptConfig`   | Loads the configuration from a config file. The path and format can be specified with parameters.  |
+
+
+## Examples
+
+In this example, a `JSON` configuration file is loaded into the script. You will find an example configuration file in the after next chapter. As soon as you have imported the configuration data, you will be able to use the returned object to access the settings with the `.` notation. All available formats for the config files are listed in the next chapter.
+
+```powershell
+# Load the configuration from a config file
+$Config = Get-ScriptConfig -Path 'C:\Scripts\config.json' -Format JSON
+
+# Access the configuration data from the config variable
+Write-Host "Config Data:" $Config.MyString
+```
 
 
 ## Supported Types
 
 The cmdlet supports multiple types. Depending on the used format, the types have to be specified differently inside the config file.
 
-| Type        | Description                                                          |
-| ----------- | -------------------------------------------------------------------- |
-| String      | Default: A settings is stored as a simple string.                    |
-| Integer     | If the setting is an integer, it will be casted this type.           |
-| Boolean     | If you specify True or False, it will be casted to a boolean type.   |
-| Array       | An array of strings can be specified.                                |
-| Hashtable   | A dictionary of key-value-pairs is supported too, both setings.      |
+| Type          | Description                                                                              |
+| ------------- | ---------------------------------------------------------------------------------------- |
+| `String`      | A settings is stored as a string by default.                                             |
+| `Integer`     | If the setting value is a valid integer, it will be casted into an integer.              |
+| `Boolean`     | By specifying the key words `True` or `False`, it will be casted to a boolean type.      |
+| `Array`       | An array of strings can be specified.                                                    |
+| `Hashtable`   | A dictionary of key-value-pairs is supported too. The key and values will be a string.   |
 
 
 ## Supportet Formats
 
-The following formats are suppoted: `XML`, `JSON` and `INI`.
+The following config file formats are suppoted: `XML`, `JSON` and `INI`.
 
-### XML
+### XML Config File Example
+
+Inside an `XML` formatted config file, it's mandatory to specify the type, the key and the value of each setting. Thanks to this, the config file is type-safe.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -78,10 +93,11 @@ The following formats are suppoted: `XML`, `JSON` and `INI`.
         </Setting>
     </Settings>
 </Configuration>
-
 ```
 
-### JSON
+### JSON Config File Example
+
+With the `JSON` format, it's easy to specify the configuraiton data with less overhead. Because of the special notation, the `JSON` format is also type-safe.
 
 ```json
 {
@@ -99,10 +115,11 @@ The following formats are suppoted: `XML`, `JSON` and `INI`.
                         "Hello": "World"
                     }
 }
-
 ```
 
-### INI
+### INI Config File Example
+
+The last supported format is the `INI` file. To support all types, it is necessary to extend the basic `INI` file convention with `[` and `]`, to specify arrays and hash tables. Sections are not supported and will be ignored.
 
 ```ini
 MyString=This is a test INI config file!
@@ -115,3 +132,9 @@ MyArray[]=Ipsum
 MyHashtable[Foo]=Bar
 MyHashtable[Hello]=World
 ```
+
+
+## Contribute
+
+Please feel free to contribute by opening new issues or providing pull requests.
+
