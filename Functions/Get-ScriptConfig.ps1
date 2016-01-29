@@ -32,11 +32,13 @@ function Get-ScriptConfig
     [CmdletBinding()]
     param
     (
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=0,
+                   Mandatory=$false)]
         [ValidateScript({Test-Path -Path $_})]
         [String] $Path = $Global:MyInvocation.MyCommand.Definition.Trim() + '.config',
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Position=1,
+                   Mandatory=$false)]
         [ValidateSet('XML', 'JSON', 'INI')]
         [String] $Format = 'XML'
     )
