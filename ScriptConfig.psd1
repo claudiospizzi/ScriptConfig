@@ -17,7 +17,7 @@
     AliasesToExport    = @()
     PrivateData        = @{
         PSData             = @{
-            Tags               = @('Windows', 'PowerShell', 'Config', 'Configuration', 'Script', 'Controller', 'Claudio Spizzi')
+            Tags               = @('PSModule', 'Config', 'Configuration', 'Script', 'Controller')
             LicenseUri         = 'https://raw.githubusercontent.com/claudiospizzi/ScriptConfig/master/LICENSE'
             ProjectUri         = 'https://github.com/claudiospizzi/ScriptConfig'
         }
