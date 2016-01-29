@@ -1,4 +1,4 @@
-﻿
+
 # Dot source all nested functions (.ps1 files) inside the \Functions folder
 Split-Path -Path $PSCommandPath |
     Join-Path -ChildPath 'Functions' |

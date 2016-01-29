@@ -38,7 +38,11 @@ function ConvertFrom-ScriptConfigIni
             {
                 # Comment
                 ';*' {
+                    break
+                }
 
+                # Section
+                '`[*`]*' {
                     break
                 }
 
