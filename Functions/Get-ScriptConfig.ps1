@@ -35,7 +35,7 @@ function Get-ScriptConfig
         [Parameter(Position=0,
                    Mandatory=$false)]
         [ValidateScript({Test-Path -Path $_})]
-        [String] $Path = $Global:MyInvocation.MyCommand.Definition.Trim() + '.config',
+        [String] $Path = ([String] $Global:MyInvocation.MyCommand.Definition).Trim() + '.config',
 
         [Parameter(Position=1,
                    Mandatory=$false)]
