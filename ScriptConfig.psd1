@@ -7,8 +7,12 @@
     Description        = 'PowerShell Module to handle configuration files for PowerShell Controller Scripts.'
     PowerShellVersion  = '3.0'
     ScriptsToProcess   = @()
-    TypesToProcess     = @()
-    FormatsToProcess   = @()
+    TypesToProcess     = @(
+        'Resources/ScriptConfig.Types.ps1xml'
+    )
+    FormatsToProcess   = @(
+        'Resources/ScriptConfig.Formats.ps1xml'
+    )
     FunctionsToExport  = @(
         'Get-ScriptConfig'
     )
