@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,9 +37,12 @@
     <Compile Include="Functions\ConvertFrom-ScriptConfigJson.ps1" />
     <Compile Include="Functions\ConvertFrom-ScriptConfigXml.ps1" />
     <Compile Include="Functions\Get-ScriptConfig.ps1" />
+    <Compile Include="Resources\ScriptConfig.Formats.ps1xml" />
+    <Compile Include="Resources\ScriptConfig.Types.ps1xml" />
     <Compile Include="ScriptConfig.psd1" />
     <Compile Include="ScriptConfig.psm1" />
     <Compile Include="Scripts\build.ps1" />
+    <Compile Include="Scripts\debug.ps1" />
     <Compile Include="Scripts\test.ps1" />
     <Compile Include="Tests\ConvertFrom-ScriptConfigIni.Tests.ps1" />
     <Compile Include="Tests\ConvertFrom-ScriptConfigJson.Tests.ps1" />
@@ -49,6 +52,7 @@
   <ItemGroup>
     <Folder Include="Examples\" />
     <Folder Include="Functions\" />
+    <Folder Include="Resources\" />
     <Folder Include="Scripts\" />
     <Folder Include="Tests\" />
   </ItemGroup>
