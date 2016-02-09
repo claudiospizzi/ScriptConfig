@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/48di0b0ml0aesj45/branch/master?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/master) [![Build status](https://ci.appveyor.com/api/projects/status/48di0b0ml0aesj45/branch/dev?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/dev)
+[![AppVeyor - master](https://ci.appveyor.com/api/projects/status/48di0b0ml0aesj45/branch/master?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/master) [![AppVeyor - dev](https://ci.appveyor.com/api/projects/status/48di0b0ml0aesj45/branch/dev?svg=true)](https://ci.appveyor.com/project/claudiospizzi/scriptconfig/branch/dev) [![PowerShell Gallery - ScriptConfig](https://img.shields.io/badge/PowerShell%20Gallery-ScriptConfig-0072C6.svg)](https://www.powershellgallery.com/packages/ScriptConfig)
 
 # ScriptConfig PowerShell Module
 PowerShell Module to handle configuration files for PowerShell controller scripts.
