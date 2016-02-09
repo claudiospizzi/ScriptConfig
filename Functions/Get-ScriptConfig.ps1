@@ -25,6 +25,13 @@
 .EXAMPLE
     C:\> $Config = Get-ScriptConfig -Format JSON
     Loads the default configuration file but in JSON format.
+
+.NOTES
+    Author     : Claudio Spizzi
+    License    : MIT License
+
+.LINK
+    https://github.com/claudiospizzi/ScriptConfig
 #>
 
 function Get-ScriptConfig

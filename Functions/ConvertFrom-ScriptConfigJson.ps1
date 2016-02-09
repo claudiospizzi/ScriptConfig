@@ -11,6 +11,13 @@
 .EXAMPLE
     C:\> Get-Content -Path 'config.json' | ConvertFrom-ScriptConfigJson
     Use the pipeline input to parse the JSON file content.
+
+.NOTES
+    Author     : Claudio Spizzi
+    License    : MIT License
+
+.LINK
+    https://github.com/claudiospizzi/ScriptConfig
 #>
 
 function ConvertFrom-ScriptConfigJson

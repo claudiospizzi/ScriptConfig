@@ -11,6 +11,13 @@
 .EXAMPLE
     C:\> Get-Content -Path 'config.xml' | ConvertFrom-ScriptConfigXml
     Use the pipeline input to parse the XML file content.
+
+.NOTES
+    Author     : Claudio Spizzi
+    License    : MIT License
+
+.LINK
+    https://github.com/claudiospizzi/ScriptConfig
 #>
 
 function ConvertFrom-ScriptConfigXml
