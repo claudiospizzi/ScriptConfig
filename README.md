@@ -6,7 +6,7 @@ PowerShell Module to handle configuration files for PowerShell controller script
 
 ## Introduction
 
-With the ScriptConfig module, configuration data can be loaded into a PowerShell controller script from a dedicated config file. Thanks to the module, it is no longer necessary to hardcode or paramter-pass the configuration data. Especialy usefull for scripts, which run unattended. The module support `XML`, `JSON` and `INI` formatted config files.
+With the ScriptConfig module, configuration data can be loaded into a PowerShell controller script from a dedicated config file. Thanks to the module, it is no longer necessary to hardcode or paramter-pass the configuration data. Especialy usefull for scripts, which run unattended. The module support `XML`, `JSON` and `INI` formatted config files. Works great in cooperation with the [ScriptLogger](https://github.com/claudiospizzi/ScriptLogger) module to improve controller scripts.
 
 
 ## Requirenments
