@@ -134,6 +134,28 @@ MyHashtable[Hello]=World
 ```
 
 
+## Versions
+
+### 1.0.3
+
+- Add formats and types resources
+
+### 1.0.2
+
+- Fix default path issue for Get-ScriptConfig
+
+### 1.0.1
+
+- Update file encoding to UTF8 w/o BOM
+- Enhance parameters for Get-ScriptConfig function
+- Update demo and help
+
+### 1.0.0
+
+- Initial public release
+
+
+
 ## Contribute
 
 Please feel free to contribute by opening new issues or providing pull requests.
