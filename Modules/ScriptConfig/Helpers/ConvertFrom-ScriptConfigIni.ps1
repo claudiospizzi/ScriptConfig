@@ -1,22 +1,16 @@
 <#
-.SYNOPSIS
+    .SYNOPSIS
     Convert the INI file content to a hashtable containing the configuration.
 
-.DESCRIPTION
-    Convert the INI file content to a hashtable containing the configuration.
-
-.PARAMETER Content
-    An array of strings with the INI file content. Each array item is a line.
-
-.EXAMPLE
-    C:\> Get-Content -Path 'config.ini' | ConvertFrom-ScriptConfigIni
+    .EXAMPLE
+    PS C:\> Get-Content -Path 'config.ini' | ConvertFrom-ScriptConfigIni
     Use the pipeline input to parse the INI file content.
 
-.NOTES
+    .NOTES
     Author     : Claudio Spizzi
     License    : MIT License
 
-.LINK
+    .LINK
     https://github.com/claudiospizzi/ScriptConfig
 #>
 
@@ -25,23 +19,21 @@ function ConvertFrom-ScriptConfigIni
     [CmdletBinding()]
     param
     (
-        [Parameter(Position=0,
-                   Mandatory=$true,
-                   ValueFromPipeline=$true)]
+        # An array of strings with the INI file content.
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [AllowEmptyString()]
-        [String[]] $Content
+        [System.String[]]
+        $Content
     )
 
-    Write-Verbose "Parse script configuration file as INI format ..."
-
-    $Config = @{}
+    $config = @{}
 
     try
     {
         # Iterating each line and parse the setting
-        foreach ($Line in $Content)
+        foreach ($line in $Content)
         {
-            switch -Wildcard ($Line)
+            switch -Wildcard ($line)
             {
                 # Comment
                 ';*' {
@@ -55,56 +47,56 @@ function ConvertFrom-ScriptConfigIni
 
                 # Array
                 '*`[`]=*'{
-                    $Key   = $Line.Split('[]=', 4)[0]
-                    $Value = $Line.Split('[]=', 4)[3]
+                    $key   = $line.Split('[]=', 4)[0]
+                    $value = $line.Split('[]=', 4)[3]
 
-                    if ($null -eq $Config[$Key])
+                    if ($null -eq $config[$key])
                     {
-                        $Config[$Key] = @()
+                        $config[$key] = @()
                     }
 
-                    $Config[$Key] += $Value
+                    $config[$key] += $value
 
                     break
                 }
 
                 # Hashtable
                 '*`[*`]=*' {
-                    $Key   = $Line.Split('[]=', 4)[0]
-                    $Hash  = $Line.Split('[]=', 4)[1]
-                    $Value = $Line.Split('[]=', 4)[3]
+                    $key   = $line.Split('[]=', 4)[0]
+                    $hash  = $line.Split('[]=', 4)[1]
+                    $value = $line.Split('[]=', 4)[3]
 
-                    if ($null -eq $Config[$Key])
+                    if ($null -eq $config[$key])
                     {
-                        $Config[$Key] = @{}
+                        $config[$key] = @{}
                     }
 
-                    $Config[$Key][$Hash] = $Value
+                    $config[$key][$hash] = $value
 
                     break
                 }
 
                 # String, Integer or Boolean
                 '*=*' {
-                    $Key   = $Line.Split('=', 2)[0]
-                    $Value = $Line.Split('=', 2)[1]
+                    $key   = $line.Split('=', 2)[0]
+                    $value = $line.Split('=', 2)[1]
 
-                    try { $Value = [Int32]::Parse($Value) } catch { }
+                    try { $value = [Int32]::Parse($value) } catch { }
 
-                    if ('True'.Equals($Value)) { $Value = $true }
-                    if ('False'.Equals($Value)) { $Value = $false }
+                    if ('True'.Equals($value)) { $value = $true }
+                    if ('False'.Equals($value)) { $value = $false }
 
-                    $Config[$Key] = $Value
+                    $config[$key] = $value
 
                     break
                 }
             }
         }
 
-        Write-Output $Config
+        Write-Output $config
     }
     catch
     {
-        throw "The configuration file content was in an invalid format: $_"
+        throw "The INI configuration file content was in an invalid format: $_"
     }
 }

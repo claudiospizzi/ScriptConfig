@@ -1,22 +1,16 @@
 <#
-.SYNOPSIS
+    .SYNOPSIS
     Convert the JSON file content to a hashtable containing the configuration.
 
-.DESCRIPTION
-    Convert the JSON file content to a hashtable containing the configuration.
-
-.PARAMETER Content
-    An array of strings with the JSON file content. Each array item is a line.
-
-.EXAMPLE
-    C:\> Get-Content -Path 'config.json' | ConvertFrom-ScriptConfigJson
+    .EXAMPLE
+    PS C:\> Get-Content -Path 'config.json' | ConvertFrom-ScriptConfigJson
     Use the pipeline input to parse the JSON file content.
 
-.NOTES
+    .NOTES
     Author     : Claudio Spizzi
     License    : MIT License
 
-.LINK
+    .LINK
     https://github.com/claudiospizzi/ScriptConfig
 #>
 
@@ -25,53 +19,47 @@ function ConvertFrom-ScriptConfigJson
     [CmdletBinding()]
     param
     (
-        [Parameter(Position=0,
-                   Mandatory=$true,
-                   ValueFromPipeline=$true)]
+        # An array of strings with the JSON file content.
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         [AllowEmptyString()]
-        [String[]] $Content
+        [System.String[]]
+        $Content
     )
 
-    Write-Verbose "Parse script configuration file as JSON format ..."
-
-    $Config = @{}
+    $config = @{}
 
     try
     {
-        # Join all lines into one string
-        $Content = $Content -join ''
-
-        # Parse the JSON content
-        $JsonContent = $Content | ConvertFrom-Json 
+        # Join all lines into one string and parse the JSON content
+        $jsonContent = ($Content -join '') | ConvertFrom-Json
 
         # Extract all propeties from the json content
-        $JsonNodes = $JsonContent | Get-Member -MemberType NoteProperty
+        $jsonNodes = $jsonContent | Get-Member -MemberType NoteProperty
 
-        foreach ($JsonNode in $JsonNodes)
+        foreach ($jsonNode in $jsonNodes)
         {
-            $Key   = $JsonNode.Name
-            $Value = $JsonContent.$Key
+            $Key   = $jsonNode.Name
+            $value = $jsonContent.$Key
 
-            # Hashtable / Other
-            if ($Value -is [System.Management.Automation.PSCustomObject])
+            if ($value -is [System.Management.Automation.PSCustomObject])
             {
-                $Config[$Key] = @{}
+                $config[$Key] = @{}
 
-                foreach ($Property in $Value.PSObject.Properties)
+                foreach ($property in $value.PSObject.Properties)
                 {
-                    $Config[$Key][$Property.Name] = $Property.Value
+                    $config[$Key][$property.Name] = $property.Value
                 }
             }
             else
             {
-                $Config[$Key] = $Value
+                $config[$Key] = $value
             }
         }
 
-        Write-Output $Config
+        Write-Output $config
     }
     catch
     {
-        throw "The configuration file content was in an invalid format: $_"
+        throw "The JSON configuration file content was in an invalid format: $_"
     }
 }
