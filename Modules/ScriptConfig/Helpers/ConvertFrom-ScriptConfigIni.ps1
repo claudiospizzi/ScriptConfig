@@ -81,12 +81,18 @@ function ConvertFrom-ScriptConfigIni
                     $key   = $line.Split('=', 2)[0]
                     $value = $line.Split('=', 2)[1]
 
-                    try { $value = [Int32]::Parse($value) } catch { }
+                    [Int32] $valueInt = $null
+                    if (([Int32]::TryParse($value, [ref] $valueInt)))
+                    {
+                        $config[$key] = $valueInt
+                    }
+                    else
+                    {
+                        if ('True'.Equals($value)) { $value = $true }
+                        if ('False'.Equals($value)) { $value = $false }
 
-                    if ('True'.Equals($value)) { $value = $true }
-                    if ('False'.Equals($value)) { $value = $false }
-
-                    $config[$key] = $value
+                        $config[$key] = $value
+                    }
 
                     break
                 }
