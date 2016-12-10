@@ -1,24 +1,15 @@
 
-# Load module
-if ($Env:APPVEYOR -eq 'True')
-{
-    $Global:TestRoot = (Get-Module ScriptConfig -ListAvailable | Select-Object -First 1).ModuleBase
+$ModulePath = Resolve-Path -Path "$PSScriptRoot\..\..\Modules" | ForEach-Object Path
+$ModuleName = Get-ChildItem -Path $ModulePath | Select-Object -First 1 -ExpandProperty BaseName
 
-    Import-Module ScriptConfig -Force
-}
-else
-{
-    $Global:TestRoot = (Split-Path -Parent $MyInvocation.MyCommand.Path | Join-Path -ChildPath '..' | Resolve-Path).Path
+Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
+Import-Module -Name "$ModulePath\$ModuleName" -Force
 
-    Import-Module "$Global:TestRoot\ScriptConfig.psd1" -Force
-}
-
-# Execute tests
 InModuleScope ScriptConfig {
 
-    Describe 'ConvertFrom-ScriptConfigXml' {
+    Describe 'ConvertFrom-ScriptConfigIni' {
 
-        $ResultString          = 'This is a test XML config file!'
+        $ResultString          = 'This is a test INI config file!'
         $ResultIntegerPositive = 42
         $ResultIntegerNegative = -153
         $ResultBooleanTrue     = $true
@@ -26,18 +17,18 @@ InModuleScope ScriptConfig {
         $ResultArray           = @( 'Lorem', 'Ipsum' )
         $ResultHashtable       = @{ Foo = 'Bar'; Hello = 'World' }
 
-        $Content = Get-Content -Path "$Global:TestRoot\Examples\XmlConfigDemo.ps1.config"
+        $Content = Get-Content -Path "$PSScriptRoot\TestData\config.ini"
 
         It 'should be able to convert the example config file' {
 
-            $Config = ConvertFrom-ScriptConfigXml -Content $Content
+            $Config = ConvertFrom-ScriptConfigIni -Content $Content
 
             $Config | Should Not BeNullOrEmpty
         }
 
         It 'shloud be able to parse a string' {
 
-            $Config = ConvertFrom-ScriptConfigXml -Content $Content
+            $Config = ConvertFrom-ScriptConfigIni -Content $Content
 
             $Config.MyString           | Should Be $ResultString
             $Config.MyString.GetType() | Should Be ([System.String])
@@ -45,7 +36,7 @@ InModuleScope ScriptConfig {
 
         It 'shloud be able to parse an integer' {
 
-            $Config = ConvertFrom-ScriptConfigXml -Content $Content
+            $Config = ConvertFrom-ScriptConfigIni -Content $Content
 
             $Config.MyIntegerPositive           | Should Be $ResultIntegerPositive
             $Config.MyIntegerPositive.GetType() | Should Be ([System.Int32])
@@ -56,7 +47,7 @@ InModuleScope ScriptConfig {
 
         It 'shloud be able to parse an boolean' {
 
-            $Config = ConvertFrom-ScriptConfigXml -Content $Content
+            $Config = ConvertFrom-ScriptConfigIni -Content $Content
 
             $Config.MyBooleanTrue           | Should Be $ResultBooleanTrue
             $Config.MyBooleanTrue.GetType() | Should Be ([System.Boolean])
@@ -67,7 +58,7 @@ InModuleScope ScriptConfig {
 
         It 'shloud be able to parse an array' {
 
-            $Config = ConvertFrom-ScriptConfigXml -Content $Content
+            $Config = ConvertFrom-ScriptConfigIni -Content $Content
 
             $Config.MyArray           | Should Not BeNullOrEmpty
             $Config.MyArray           | Should Be $ResultArray
@@ -76,7 +67,7 @@ InModuleScope ScriptConfig {
 
         It 'shloud be able to parse an hashtable' {
 
-            $Config = ConvertFrom-ScriptConfigXml -Content $Content
+            $Config = ConvertFrom-ScriptConfigIni -Content $Content
 
             $Config.MyHashtable           | Should Not BeNullOrEmpty
             $Config.MyHashtable.Keys      | Should Be $ResultHashtable.Keys

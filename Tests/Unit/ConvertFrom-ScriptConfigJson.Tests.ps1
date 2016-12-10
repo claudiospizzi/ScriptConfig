@@ -1,19 +1,10 @@
 
-# Load module
-if ($Env:APPVEYOR -eq 'True')
-{
-    $Global:TestRoot = (Get-Module ScriptConfig -ListAvailable | Select-Object -First 1).ModuleBase
+$ModulePath = Resolve-Path -Path "$PSScriptRoot\..\..\Modules" | ForEach-Object Path
+$ModuleName = Get-ChildItem -Path $ModulePath | Select-Object -First 1 -ExpandProperty BaseName
 
-    Import-Module ScriptConfig -Force
-}
-else
-{
-    $Global:TestRoot = (Split-Path -Parent $MyInvocation.MyCommand.Path | Join-Path -ChildPath '..' | Resolve-Path).Path
+Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
+Import-Module -Name "$ModulePath\$ModuleName" -Force
 
-    Import-Module "$Global:TestRoot\ScriptConfig.psd1" -Force
-}
-
-# Execute tests
 InModuleScope ScriptConfig {
 
     Describe 'ConvertFrom-ScriptConfigJson' {
@@ -26,7 +17,7 @@ InModuleScope ScriptConfig {
         $ResultArray           = @( 'Lorem', 'Ipsum' )
         $ResultHashtable       = @{ Foo = 'Bar'; Hello = 'World' }
 
-        $Content = Get-Content -Path "$Global:TestRoot\Examples\JsonConfigDemo.ps1.config"
+        $Content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
 
         It 'should be able to convert the example config file' {
 
