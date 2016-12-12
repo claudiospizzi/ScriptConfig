@@ -1,6 +1,6 @@
 @{
     RootModule         = 'ScriptConfig.psm1'
-    ModuleVersion      = '1.0.3'
+    ModuleVersion      = '2.0.0'
     GUID               = '0464897C-2F37-489F-93B2-7F6B9B582761'
     Author             = 'Claudio Spizzi'
     Copyright          = 'Copyright (c) 2016 by Claudio Spizzi. Licensed under MIT license.'
