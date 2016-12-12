@@ -1,0 +1,15 @@
+{
+    "MyString":  "This is a test JSON config file!",
+    "MyIntegerPositive":  42,
+    "MyIntegerNegative":  -153,
+    "MyBooleanTrue":  true,
+    "MyBooleanFalse":  false,
+    "MyArray":  [
+                    "Lorem",
+                    "Ipsum"
+                ],
+    "MyHashtable":  {
+                        "Foo": "Bar",
+                        "Hello": "World"
+                    }
+}

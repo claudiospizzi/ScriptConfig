@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+    <Settings>
+        <Setting Type="string" Key="MyString" Value="This is a test XML config file!" />
+        <Setting Type="integer" Key="MyIntegerPositive" Value="42" />
+        <Setting Type="integer" Key="MyIntegerNegative" Value="-153" />
+        <Setting Type="boolean" Key="MyBooleanTrue" Value="true" />
+        <Setting Type="boolean" Key="MyBooleanFalse" Value="false" />
+        <Setting Type="array" Key="MyArray">
+            <Item Value="Lorem" />
+            <Item Value="Ipsum" />
+        </Setting>
+        <Setting Type="hashtable" Key="MyHashtable">
+            <Item Key="Foo" Value="Bar" />
+            <Item Key="Hello" Value="World" />
+        </Setting>
+    </Settings>
+</Configuration>
