@@ -168,8 +168,8 @@ Studio Code and ensure that the PowerShell extension is installed.
 
 [ScriptLogger]: https://github.com/claudiospizzi/ScriptLogger
 
-[PowerShell Gallery]: https://www.powershellgallery.com/packages/ScriptLogger
-[GitHub Releases]: https://github.com/claudiospizzi/ScriptLogger/releases
+[PowerShell Gallery]: https://www.powershellgallery.com/packages/ScriptConfig
+[GitHub Releases]: https://github.com/claudiospizzi/ScriptConfig/releases
 [Installing a PowerShell Module]: https://msdn.microsoft.com/en-us/library/dd878350
 
 [CHANGELOG.md]: CHANGELOG.md
