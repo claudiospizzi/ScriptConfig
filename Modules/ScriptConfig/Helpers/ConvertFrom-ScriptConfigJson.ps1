@@ -1,19 +1,19 @@
 <#
     .SYNOPSIS
-    Convert the JSON file content to a hashtable containing the configuration.
+        Convert the JSON file content to a hashtable containing the
+        configuration.
 
     .EXAMPLE
-    PS C:\> Get-Content -Path 'config.json' | ConvertFrom-ScriptConfigJson
-    Use the pipeline input to parse the JSON file content.
+        PS C:\> Get-Content -Path 'config.json' | ConvertFrom-ScriptConfigJson
+        Use the pipeline input to parse the JSON file content.
 
     .NOTES
-    Author     : Claudio Spizzi
-    License    : MIT License
+        Author     : Claudio Spizzi
+        License    : MIT License
 
     .LINK
-    https://github.com/claudiospizzi/ScriptConfig
+        https://github.com/claudiospizzi/ScriptConfig
 #>
-
 function ConvertFrom-ScriptConfigJson
 {
     [CmdletBinding()]

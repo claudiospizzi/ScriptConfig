@@ -1,78 +1,98 @@
 
-$ModulePath = Resolve-Path -Path "$PSScriptRoot\..\..\Modules" | ForEach-Object Path
-$ModuleName = Get-ChildItem -Path $ModulePath | Select-Object -First 1 -ExpandProperty BaseName
+$modulePath = Resolve-Path -Path "$PSScriptRoot\..\..\.." | Select-Object -ExpandProperty Path
+$moduleName = Resolve-Path -Path "$PSScriptRoot\..\.." | Get-Item | Select-Object -ExpandProperty BaseName
 
-Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
-Import-Module -Name "$ModulePath\$ModuleName" -Force
+Remove-Module -Name $moduleName -Force -ErrorAction SilentlyContinue
+Import-Module -Name "$modulePath\$moduleName" -Force
 
 InModuleScope ScriptConfig {
 
     Describe 'ConvertFrom-ScriptConfigJson' {
 
-        $ResultString          = 'This is a test JSON config file!'
-        $ResultIntegerPositive = 42
-        $ResultIntegerNegative = -153
-        $ResultBooleanTrue     = $true
-        $ResultBooleanFalse    = $false
-        $ResultArray           = @( 'Lorem', 'Ipsum' )
-        $ResultHashtable       = @{ Foo = 'Bar'; Hello = 'World' }
-
-        $Content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
-
         It 'should be able to convert the example config file' {
 
-            $Config = ConvertFrom-ScriptConfigJson -Content $Content
+            # Arrange
+            $content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
 
-            $Config | Should Not BeNullOrEmpty
+            # Act
+            $config = ConvertFrom-ScriptConfigJson -Content $content
+
+            # Assert
+            $config | Should -Not -BeNullOrEmpty
         }
 
         It 'shloud be able to parse a string' {
 
-            $Config = ConvertFrom-ScriptConfigJson -Content $Content
+            # Arrange
+            $content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
 
-            $Config.MyString           | Should Be $ResultString
-            $Config.MyString.GetType() | Should Be ([System.String])
+            # Act
+            $config = ConvertFrom-ScriptConfigJson -Content $content
+
+            # Assert
+            $config.MyString           | Should -Be 'This is a test JSON config file!'
+            $config.MyString.GetType() | Should -Be ([System.String])
         }
 
         It 'shloud be able to parse an integer' {
 
-            $Config = ConvertFrom-ScriptConfigJson -Content $Content
+            # Arrange
+            $content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
 
-            $Config.MyIntegerPositive           | Should Be $ResultIntegerPositive
-            $Config.MyIntegerPositive.GetType() | Should Be ([System.Int32])
+            # Act
+            $config = ConvertFrom-ScriptConfigJson -Content $content
 
-            $Config.MyIntegerNegative           | Should Be $ResultIntegerNegative
-            $Config.MyIntegerNegative.GetType() | Should Be ([System.Int32])
+            # Assert
+            $config.MyIntegerPositive           | Should -Be 42
+            $config.MyIntegerPositive.GetType() | Should -Be ([System.Int32])
+            $config.MyIntegerNegative           | Should -Be -153
+            $config.MyIntegerNegative.GetType() | Should -Be ([System.Int32])
         }
 
         It 'shloud be able to parse an boolean' {
 
-            $Config = ConvertFrom-ScriptConfigJson -Content $Content
+            # Arrange
+            $content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
 
-            $Config.MyBooleanTrue           | Should Be $ResultBooleanTrue
-            $Config.MyBooleanTrue.GetType() | Should Be ([System.Boolean])
+            # Act
+            $config = ConvertFrom-ScriptConfigJson -Content $content
 
-            $Config.MyBooleanFalse           | Should Be $ResultBooleanFalse
-            $Config.MyBooleanFalse.GetType() | Should Be ([System.Boolean])
+            # Assert
+            $config.MyBooleanTrue            | Should -BeTrue
+            $config.MyBooleanTrue.GetType()  | Should -Be ([System.Boolean])
+            $config.MyBooleanFalse           | Should -BeFalse
+            $config.MyBooleanFalse.GetType() | Should -Be ([System.Boolean])
         }
 
         It 'shloud be able to parse an array' {
 
-            $Config = ConvertFrom-ScriptConfigJson -Content $Content
+            # Arrange
+            $content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
+            $expectedArray = @( 'Lorem', 'Ipsum' )
 
-            $Config.MyArray           | Should Not BeNullOrEmpty
-            $Config.MyArray           | Should Be $ResultArray
-            $Config.MyArray.GetType() | Should Be ([System.Object[]])
+            # Act
+            $config = ConvertFrom-ScriptConfigJson -Content $content
+
+            # Assert
+            $config.MyArray           | Should -Not -BeNullOrEmpty
+            $config.MyArray           | Should -Be $expectedArray
+            $config.MyArray.GetType() | Should -Be ([System.Object[]])
         }
 
         It 'shloud be able to parse an hashtable' {
 
-            $Config = ConvertFrom-ScriptConfigJson -Content $Content
+            # Arrange
+            $content = Get-Content -Path "$PSScriptRoot\TestData\config.json"
+            $expectedHashtable = @{ Foo = 'Bar'; Hello = 'World' }
 
-            $Config.MyHashtable           | Should Not BeNullOrEmpty
-            $Config.MyHashtable.Keys      | Should Be $ResultHashtable.Keys
-            $Config.MyHashtable.Values    | Should Be $ResultHashtable.Values
-            $Config.MyHashtable.GetType() | Should Be ([System.Collections.Hashtable])
+            # Act
+            $config = ConvertFrom-ScriptConfigJson -Content $content
+
+            # Assert
+            $config.MyHashtable                       | Should -Not -BeNullOrEmpty
+            $config.MyHashtable.Keys -as [string[]]   | Should -Be ($expectedHashtable.Keys -as [string[]])
+            $config.MyHashtable.Values -as [string[]] | Should -Be ($expectedHashtable.Values -as [string[]])
+            $config.MyHashtable.GetType()             | Should -Be ([System.Collections.Hashtable])
         }
     }
 }

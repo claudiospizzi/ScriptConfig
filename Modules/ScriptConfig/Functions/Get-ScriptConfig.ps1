@@ -1,34 +1,33 @@
 <#
     .SYNOPSIS
-    Load a script configuration from a config file.
+        Load a script configuration from a config file.
 
     .DESCRIPTION
-    Load a script configuration from a config file. By default, the config file
-    next to the script is loaded. So for the script MyScript.ps1, the config
-    file MyScript.ps1.config will be loaded. The config file format will be
-    detected by it's extension (.xml, .ini, .json). If the file format can't be
-    detected, the default format (XML) will be used.
+        Load a script configuration from a config file. By default, the config
+        file next to the script is loaded. So for the script MyScript.ps1, the
+        config file MyScript.ps1.config will be loaded. The config file format
+        will be detected by it's extension (.xml, .ini, .json). If the file
+        format can't be detected, the default format (JSON) will be used.
 
     .EXAMPLE
-    PS C:\> $config = Get-ScriptConfig
-    Loads the default XML formatted configuration file.
+        PS C:\> $config = Get-ScriptConfig
+        Loads the default JSON formatted configuration file.
 
     .EXAMPLE
-    PS C:\> $config = Get-ScriptConfig -Path 'C:\MyApp\global.config'
-    Loads a custom configuration file, with default XML format.
+        PS C:\> $config = Get-ScriptConfig -Path 'C:\MyApp\global.config'
+        Loads a custom configuration file, with default JSON format.
 
     .EXAMPLE
-    PS C:\> $config = Get-ScriptConfig -Format JSON
-    Loads the default configuration file but in JSON format.
+        PS C:\> $config = Get-ScriptConfig -Format XML
+        Loads the default configuration file but in XML format.
 
     .NOTES
-    Author     : Claudio Spizzi
-    License    : MIT License
+        Author     : Claudio Spizzi
+        License    : MIT License
 
     .LINK
-    https://github.com/claudiospizzi/ScriptConfig
+        https://github.com/claudiospizzi/ScriptConfig
 #>
-
 function Get-ScriptConfig
 {
     [CmdletBinding()]
@@ -37,9 +36,8 @@ function Get-ScriptConfig
         # Specify the path to the configuration file. By default, the current
         # script file path will be used with an appended '.config' extension.
         [Parameter(Mandatory = $false)]
-        [ValidateScript({Test-Path -Path $_})]
         [System.String]
-        $Path = ([String] $Global:MyInvocation.MyCommand.Definition).Trim() + '.config',
+        $Path,
 
         # Override the format detection and default value.
         [Parameter(Mandatory = $false)]
@@ -48,18 +46,38 @@ function Get-ScriptConfig
         $Format
     )
 
-    # Only work with absolute path, makes error handling easier
-    $Path = (Resolve-Path -Path $Path).Path
+    # If the Path parameter was not specified, add a default value. If possible,
+    # use the last script called this function. Else throw an exception.
+    if (-not $PSBoundParameters.ContainsKey('Path'))
+    {
+        $lastScriptPath = Get-PSCallStack | Select-Object -Skip 1 -First 1 -ExpandProperty 'ScriptName'
 
-    # If no format was specified, try to detect it
-    if ([String]::IsNullOrEmpty($Format))
+        if (-not [System.String]::IsNullOrEmpty($lastScriptPath))
+        {
+            $Path = $lastScriptPath + '.config'
+        }
+        else
+        {
+            throw "Configuration file not specified"
+        }
+    }
+
+    # Now check, if the configuration file exists
+    if (-not (Test-Path -Path $Path))
+    {
+        throw "Configuration file not found: $Path"
+    }
+
+    # If the Format parameter was not specified, try to detect by the file
+    # extension or use the default format JSON.
+    if (-not $PSBoundParameters.ContainsKey('Format'))
     {
         switch -Wildcard ($Path)
         {
             '*.xml'  { $Format = 'XML' }
             '*.json' { $Format = 'JSON' }
             '*.ini'  { $Format = 'INI' }
-            default  { $Format = 'XML' }
+            default  { $Format = 'JSON' }
         }
     }
 
@@ -68,17 +86,11 @@ function Get-ScriptConfig
     # Load raw content, parse it later
     $content = Get-Content -Path $Path -ErrorAction Stop
 
-    # Use custom functions to parse the files
+    # Use custom functions to parse the files and return the config object
     switch ($Format)
     {
-        'XML'  { $configHashtable = ConvertFrom-ScriptConfigXml -Content $content  }
-        'JSON' { $configHashtable = ConvertFrom-ScriptConfigJson -Content $content }
-        'INI'  { $configHashtable = ConvertFrom-ScriptConfigIni -Content $content  }
+        'XML'  { ConvertFrom-ScriptConfigXml -Content $content }
+        'JSON' { ConvertFrom-ScriptConfigJson -Content $content }
+        'INI'  { ConvertFrom-ScriptConfigIni -Content $content }
     }
-
-    # Create a config object with a custom type
-    $config = New-Object -TypeName PSObject -Property $configHashtable
-    $config.PSTypeNames.Insert(0, 'ScriptConfig.Configuration')
-
-    Write-Output $config
 }

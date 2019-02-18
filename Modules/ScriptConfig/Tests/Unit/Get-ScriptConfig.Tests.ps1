@@ -1,126 +1,136 @@
 
-$ModulePath = Resolve-Path -Path "$PSScriptRoot\..\..\Modules" | ForEach-Object Path
-$ModuleName = Get-ChildItem -Path $ModulePath | Select-Object -First 1 -ExpandProperty BaseName
+$modulePath = Resolve-Path -Path "$PSScriptRoot\..\..\.." | Select-Object -ExpandProperty Path
+$moduleName = Resolve-Path -Path "$PSScriptRoot\..\.." | Get-Item | Select-Object -ExpandProperty BaseName
 
-Remove-Module -Name $ModuleName -Force -ErrorAction SilentlyContinue
-Import-Module -Name "$ModulePath\$ModuleName" -Force
+Remove-Module -Name $moduleName -Force -ErrorAction SilentlyContinue
+Import-Module -Name "$modulePath\$moduleName" -Force
 
 Describe 'Get-ScriptConfig' {
 
-    Context 'Result' {
-
-        $ResultStringIni       = 'This is a test INI config file!'
-        $ResultStringJson      = 'This is a test JSON config file!'
-        $ResultStringXml       = 'This is a test XML config file!'
-        $ResultIntegerPositive = 42
-        $ResultIntegerNegative = -153
-        $ResultBooleanTrue     = $true
-        $ResultBooleanFalse    = $false
-        $ResultArray           = @( 'Lorem', 'Ipsum' )
-        $ResultHashtable       = @{ Foo = 'Bar'; Hello = 'World' }
+    Context 'Test Data' {
 
         It 'shloud be able to load a valid INI configuration file' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.ini" -Format INI
+            # Arrange
+            $expectedArray     = @( 'Lorem', 'Ipsum' )
+            $expectedHashtable = @{ Foo = 'Bar'; Hello = 'World' }
 
-            $Config | Should Not BeNullOrEmpty
+            # Act
+            $config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.ini" -Format 'INI'
 
-            $Config.MyString           | Should Be $ResultStringIni
-            $Config.MyIntegerPositive  | Should Be $ResultIntegerPositive
-            $Config.MyIntegerNegative  | Should Be $ResultIntegerNegative
-            $Config.MyBooleanTrue      | Should Be $ResultBooleanTrue
-            $Config.MyBooleanFalse     | Should Be $ResultBooleanFalse
-            $Config.MyArray            | Should Be $ResultArray
-            $Config.MyHashtable.Keys   | Should Be $ResultHashtable.Keys
-            $Config.MyHashtable.Values | Should Be $ResultHashtable.Values
+            # Assert
+            $config                                   | Should -Not -BeNullOrEmpty
+            $config.MyString                          | Should -Be 'This is a test INI config file!'
+            $config.MyIntegerPositive                 | Should -Be 42
+            $config.MyIntegerNegative                 | Should -Be -153
+            $config.MyBooleanTrue                     | Should -BeTrue
+            $config.MyBooleanFalse                    | Should -BeFalse
+            $config.MyArray                           | Should -Be $expectedArray
+            $config.MyHashtable.Keys -as [string[]]   | Should -Be ($expectedHashtable.Keys -as [string[]])
+            $config.MyHashtable.Values -as [string[]] | Should -Be ($expectedHashtable.Values -as [string[]])
         }
 
         It 'shloud be able to load a valid JSON configuration file' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.json" -Format JSON
+            # Arrange
+            $expectedArray     = @( 'Lorem', 'Ipsum' )
+            $expectedHashtable = @{ Foo = 'Bar'; Hello = 'World' }
 
-            $Config | Should Not BeNullOrEmpty
+            # Act
+            $config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.json" -Format 'JSON'
 
-            $Config.MyString           | Should Be $ResultStringJson
-            $Config.MyIntegerPositive  | Should Be $ResultIntegerPositive
-            $Config.MyIntegerNegative  | Should Be $ResultIntegerNegative
-            $Config.MyBooleanTrue      | Should Be $ResultBooleanTrue
-            $Config.MyBooleanFalse     | Should Be $ResultBooleanFalse
-            $Config.MyArray            | Should Be $ResultArray
-            $Config.MyHashtable.Keys   | Should Be $ResultHashtable.Keys
-            $Config.MyHashtable.Values | Should Be $ResultHashtable.Values
+            # Assert
+            $config                                   | Should -Not -BeNullOrEmpty
+            $config.MyString                          | Should -Be 'This is a test JSON config file!'
+            $config.MyIntegerPositive                 | Should -Be 42
+            $config.MyIntegerNegative                 | Should -Be -153
+            $config.MyBooleanTrue                     | Should -BeTrue
+            $config.MyBooleanFalse                    | Should -BeFalse
+            $config.MyArray                           | Should -Be $expectedArray
+            $config.MyHashtable.Keys -as [string[]]   | Should -Be ($expectedHashtable.Keys -as [string[]])
+            $config.MyHashtable.Values -as [string[]] | Should -Be ($expectedHashtable.Values -as [string[]])
         }
 
         It 'shloud be able to load a valid XML configuration file' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.xml" -Format XML
+            # Arrange
+            $expectedArray     = @( 'Lorem', 'Ipsum' )
+            $expectedHashtable = @{ Foo = 'Bar'; Hello = 'World' }
 
-            $Config | Should Not BeNullOrEmpty
+            # Act
+            $config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.xml" -Format 'XML'
 
-            $Config.MyString           | Should Be $ResultStringXml
-            $Config.MyIntegerPositive  | Should Be $ResultIntegerPositive
-            $Config.MyIntegerNegative  | Should Be $ResultIntegerNegative
-            $Config.MyBooleanTrue      | Should Be $ResultBooleanTrue
-            $Config.MyBooleanFalse     | Should Be $ResultBooleanFalse
-            $Config.MyArray            | Should Be $ResultArray
-            $Config.MyHashtable.Keys   | Should Be $ResultHashtable.Keys
-            $Config.MyHashtable.Values | Should Be $ResultHashtable.Values
+            # Assert
+            $config                                   | Should -Not -BeNullOrEmpty
+            $config.MyString                          | Should -Be 'This is a test XML config file!'
+            $config.MyIntegerPositive                 | Should -Be 42
+            $config.MyIntegerNegative                 | Should -Be -153
+            $config.MyBooleanTrue                     | Should -BeTrue
+            $config.MyBooleanFalse                    | Should -BeFalse
+            $config.MyArray                           | Should -Be $expectedArray
+            $config.MyHashtable.Keys -as [string[]]   | Should -Be ($expectedHashtable.Keys -as [string[]])
+            $config.MyHashtable.Values -as [string[]] | Should -Be ($expectedHashtable.Values -as [string[]])
         }
     }
 
-    Context 'Format Detection' {
+    Context 'Mocked Convert Script' {
 
-        Mock ConvertFrom-ScriptConfigIni { return @{} } -ModuleName ScriptConfig
-        Mock ConvertFrom-ScriptConfigJson { return @{} } -ModuleName ScriptConfig
-        Mock ConvertFrom-ScriptConfigXml { return @{} } -ModuleName ScriptConfig
+        Mock ConvertFrom-ScriptConfigIni  { return @{} } -ModuleName 'ScriptConfig' -Verifiable
+        Mock ConvertFrom-ScriptConfigJson { return @{} } -ModuleName 'ScriptConfig' -Verifiable
+        Mock ConvertFrom-ScriptConfigXml  { return @{} } -ModuleName 'ScriptConfig' -Verifiable
 
         It 'should call the INI function if a .ini file is specified' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.ini"
+            # Act
+            Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.ini" | Out-Null
 
-            Assert-MockCalled 'ConvertFrom-ScriptConfigIni' -ModuleName ScriptConfig -Times 1 -Exactly
+            # Assert
+            Assert-MockCalled 'ConvertFrom-ScriptConfigIni' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
         }
 
         It 'should call the JSON function if a .json file is specified' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.json"
+            # Act
+            Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.json" | Out-Null
 
-            Assert-MockCalled 'ConvertFrom-ScriptConfigJson' -ModuleName ScriptConfig -Times 1 -Exactly
+            # Assert
+            Assert-MockCalled 'ConvertFrom-ScriptConfigJson' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
         }
 
         It 'should call the XML function if a .xml file is specified' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.xml"
+            # Act
+            Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.xml" | Out-Null
 
-            Assert-MockCalled 'ConvertFrom-ScriptConfigXml' -ModuleName ScriptConfig -Times 1 -Exactly
+            # Assert
+            Assert-MockCalled 'ConvertFrom-ScriptConfigXml' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
         }
-    }
-
-    Context 'Format Parameter' {
-
-        Mock ConvertFrom-ScriptConfigIni { return @{} } -ModuleName ScriptConfig
-        Mock ConvertFrom-ScriptConfigJson { return @{} } -ModuleName ScriptConfig
-        Mock ConvertFrom-ScriptConfigXml { return @{} } -ModuleName ScriptConfig
 
         It 'should call the INI function if INI format is specified' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.ini" -Format INI
+            # Act
+            Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.ini" -Format 'INI' | Out-Null
 
-            Assert-MockCalled 'ConvertFrom-ScriptConfigIni' -ModuleName ScriptConfig -Times 1 -Exactly
+            # Assert
+            Assert-MockCalled 'ConvertFrom-ScriptConfigIni' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
         }
 
         It 'should call the JSON function if JSON format is specified' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.json" -Format JSON
+            # Act
+            Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.json" -Format 'JSON' | Out-Null
 
-            Assert-MockCalled 'ConvertFrom-ScriptConfigJson' -ModuleName ScriptConfig -Times 1 -Exactly
+            # Assert
+            Assert-MockCalled 'ConvertFrom-ScriptConfigJson' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
         }
 
         It 'should call the XML function if XML format is specified' {
 
-            $Config = Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.xml" -Format XML
+            # Act
+            Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.xml" -Format 'XML' | Out-Null
 
-            Assert-MockCalled 'ConvertFrom-ScriptConfigXml' -ModuleName ScriptConfig -Times 1 -Exactly
+            # Assert
+            Assert-MockCalled 'ConvertFrom-ScriptConfigXml' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
         }
     }
 }

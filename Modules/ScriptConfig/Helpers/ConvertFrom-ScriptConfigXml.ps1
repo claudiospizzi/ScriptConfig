@@ -1,19 +1,19 @@
 <#
     .SYNOPSIS
-    Convert the XML file content to a hashtable containing the configuration.
+        Convert the XML file content to a hashtable containing the
+        configuration.
 
     .EXAMPLE
-    PS C:\> Get-Content -Path 'config.xml' | ConvertFrom-ScriptConfigXml
-    Use the pipeline input to parse the XML file content.
+        PS C:\> Get-Content -Path 'config.xml' | ConvertFrom-ScriptConfigXml
+        Use the pipeline input to parse the XML file content.
 
     .NOTES
-    Author     : Claudio Spizzi
-    License    : MIT License
+        Author     : Claudio Spizzi
+        License    : MIT License
 
     .LINK
-    https://github.com/claudiospizzi/ScriptConfig
+        https://github.com/claudiospizzi/ScriptConfig
 #>
-
 function ConvertFrom-ScriptConfigXml
 {
     [CmdletBinding()]

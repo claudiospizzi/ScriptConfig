@@ -1,19 +1,19 @@
 <#
     .SYNOPSIS
-    Convert the INI file content to a hashtable containing the configuration.
+        Convert the INI file content to a hashtable containing the
+        configuration.
 
     .EXAMPLE
-    PS C:\> Get-Content -Path 'config.ini' | ConvertFrom-ScriptConfigIni
-    Use the pipeline input to parse the INI file content.
+        PS C:\> Get-Content -Path 'config.ini' | ConvertFrom-ScriptConfigIni
+        Use the pipeline input to parse the INI file content.
 
     .NOTES
-    Author     : Claudio Spizzi
-    License    : MIT License
+        Author     : Claudio Spizzi
+        License    : MIT License
 
     .LINK
-    https://github.com/claudiospizzi/ScriptConfig
+        https://github.com/claudiospizzi/ScriptConfig
 #>
-
 function ConvertFrom-ScriptConfigIni
 {
     [CmdletBinding()]
@@ -26,7 +26,9 @@ function ConvertFrom-ScriptConfigIni
         $Content
     )
 
-    $config = @{}
+    $config = @{
+        PSTypeName = 'ScriptConfig.Configuration'
+    }
 
     try
     {
@@ -99,7 +101,7 @@ function ConvertFrom-ScriptConfigIni
             }
         }
 
-        Write-Output $config
+        [PSCustomObject] $config
     }
     catch
     {
