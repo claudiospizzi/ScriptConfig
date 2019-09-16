@@ -36,6 +36,7 @@ function Get-ScriptConfig
         # Specify the path to the configuration file. By default, the current
         # script file path will be used with an appended '.config' extension.
         [Parameter(Mandatory = $false)]
+        [AllowEmptyString()]
         [System.String]
         $Path,
 
@@ -48,13 +49,28 @@ function Get-ScriptConfig
 
     # If the Path parameter was not specified, add a default value. If possible,
     # use the last script called this function. Else throw an exception.
-    if (-not $PSBoundParameters.ContainsKey('Path'))
+    if (-not $PSBoundParameters.ContainsKey('Path') -or [System.String]::IsNullOrEmpty($Path))
     {
         $lastScriptPath = Get-PSCallStack | Select-Object -Skip 1 -First 1 -ExpandProperty 'ScriptName'
 
         if (-not [System.String]::IsNullOrEmpty($lastScriptPath))
         {
-            $Path = $lastScriptPath + '.config'
+            if (Test-Path -Path "$lastScriptPath.ini")
+            {
+                $Path = "$lastScriptPath.ini"
+            }
+            elseif (Test-Path -Path "$lastScriptPath.json")
+            {
+                $Path = "$lastScriptPath.json"
+            }
+            elseif (Test-Path -Path "$lastScriptPath.xml")
+            {
+                $Path = "$lastScriptPath.xml"
+            }
+            else
+            {
+                $Path = "$lastScriptPath.config"
+            }
         }
         else
         {
@@ -74,9 +90,9 @@ function Get-ScriptConfig
     {
         switch -Wildcard ($Path)
         {
-            '*.xml'  { $Format = 'XML' }
-            '*.json' { $Format = 'JSON' }
             '*.ini'  { $Format = 'INI' }
+            '*.json' { $Format = 'JSON' }
+            '*.xml'  { $Format = 'XML' }
             default  { $Format = 'JSON' }
         }
     }
