@@ -21,10 +21,6 @@
         PS C:\> $config = Get-ScriptConfig -Format XML
         Loads the default configuration file but in XML format.
 
-    .NOTES
-        Author     : Claudio Spizzi
-        License    : MIT License
-
     .LINK
         https://github.com/claudiospizzi/ScriptConfig
 #>

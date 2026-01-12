@@ -7,10 +7,6 @@
         PS C:\> Get-Content -Path 'config.json' | ConvertFrom-ScriptConfigJson
         Use the pipeline input to parse the JSON file content.
 
-    .NOTES
-        Author     : Claudio Spizzi
-        License    : MIT License
-
     .LINK
         https://github.com/claudiospizzi/ScriptConfig
 #>
@@ -33,7 +29,7 @@ function ConvertFrom-ScriptConfigJson
         # Join all lines into one string and parse the JSON content
         $jsonContent = ($Content -join '') | ConvertFrom-Json
 
-        # Extract all propeties from the json content
+        # Extract all properties from the json content
         $jsonNodes = $jsonContent | Get-Member -MemberType NoteProperty
 
         foreach ($jsonNode in $jsonNodes)

@@ -7,10 +7,6 @@
         PS C:\> Get-Content -Path 'config.ini' | ConvertFrom-ScriptConfigIni
         Use the pipeline input to parse the INI file content.
 
-    .NOTES
-        Author     : Claudio Spizzi
-        License    : MIT License
-
     .LINK
         https://github.com/claudiospizzi/ScriptConfig
 #>

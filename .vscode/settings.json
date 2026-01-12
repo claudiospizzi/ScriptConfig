@@ -48,5 +48,6 @@
     "powershell.codeFormatting.whitespaceBeforeOpenParen": true,
 
     "cSpell.words": [
+        "hashtable"
     ]
 }
