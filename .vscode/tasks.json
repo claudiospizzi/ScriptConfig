@@ -1,28 +1,11 @@
 {
     "version": "2.0.0",
 
-    "windows": {
-        "type": "shell",
-        "options": {
-            "shell": {
-                "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-                "args": [ "-NoProfile", "-Command" ]
-            }
-        },
-
-        "command": "\"& { Invoke-psake build.psake.ps1 -taskList $args -notr }\"",
-
-        "presentation": {
-            "echo": false,
-            "reveal": "always",
-            "focus": false,
-            "panel": "new"
-        }
-    },
-
     "tasks": [
         {
             "label": "Test",
+            "command": "pwsh",
+            "args": [ "-NoProfile", "-Command", "Invoke-Build -Task Test" ],
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -30,6 +13,8 @@
         },
         {
             "label": "Build",
+            "command": "pwsh",
+            "args": [ "-NoProfile", "-Command", "Invoke-Build -Task Build" ],
             "group": {
                 "kind": "build",
                 "isDefault": true

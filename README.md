@@ -1,14 +1,11 @@
-[![PowerShell Gallery - ScriptConfig](https://img.shields.io/badge/PowerShell_Gallery-ScriptConfig-0072C6.svg)](https://www.powershellgallery.com/packages/ScriptConfig)
-[![GitHub - Release](https://img.shields.io/github/release/claudiospizzi/ScriptConfig.svg)](https://github.com/claudiospizzi/ScriptConfig/releases)
-[![AppVeyor - master](https://img.shields.io/appveyor/ci/claudiospizzi/ScriptConfig/master.svg)](https://ci.appveyor.com/project/claudiospizzi/ScriptConfig/branch/master)
-[![AppVeyor - dev](https://img.shields.io/appveyor/ci/claudiospizzi/ScriptConfig/dev.svg)](https://ci.appveyor.com/project/claudiospizzi/ScriptConfig/branch/dev)
-
+[![GitHub Release](https://img.shields.io/github/v/release/claudiospizzi/ScriptConfig?label=Release&logo=GitHub&sort=semver)](https://github.com/claudiospizzi/ScriptConfig/releases)
+[![GitHub CI Build](https://img.shields.io/github/actions/workflow/status/claudiospizzi/ScriptConfig/pwsh-ci.yml?label=CI%20Build&logo=GitHub)](https://github.com/claudiospizzi/ScriptConfig/actions/workflows/pwsh-ci.yml)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/ScriptConfig?label=PowerShell%20Gallery&logo=PowerShell)](https://www.powershellgallery.com/packages/ScriptConfig)
+[![Gallery Downloads](https://img.shields.io/powershellgallery/dt/ScriptConfig?label=Downloads&logo=PowerShell)](https://www.powershellgallery.com/packages/ScriptConfig)
 
 # ScriptConfig PowerShell Module
 
-PowerShell Module to handle configuration files for PowerShell controller
-scripts.
-
+PowerShell Module to handle configuration files for PowerShell controller scripts.
 
 ## Introduction
 

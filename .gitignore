@@ -1,3 +1,15 @@
-# Ignore project files
-/bin/
-/tst/
+# Module assemblies
+**/Assemblies/*.dll
+!**/Assemblies/QRCode.dll
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+
+# Visual Studio cache, packages
+.vs/
+**/packages/*
+
+# Temporary debug files
+.debug.*.ps1
