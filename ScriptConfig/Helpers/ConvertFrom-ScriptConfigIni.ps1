@@ -28,6 +28,8 @@ function ConvertFrom-ScriptConfigIni
 
     try
     {
+        $iniArrayHashSplitChars = [System.Char[]] @('[', ']', '=')
+
         # Iterating each line and parse the setting
         foreach ($line in $Content)
         {
@@ -45,8 +47,8 @@ function ConvertFrom-ScriptConfigIni
 
                 # Array
                 '*`[`]=*'{
-                    $key   = $line.Split('[]=', 4)[0]
-                    $value = $line.Split('[]=', 4)[3]
+                    $key   = $line.Split($iniArrayHashSplitChars, 4)[0]
+                    $value = $line.Split($iniArrayHashSplitChars, 4)[3]
 
                     if ($null -eq $config[$key])
                     {
@@ -60,9 +62,9 @@ function ConvertFrom-ScriptConfigIni
 
                 # Hashtable
                 '*`[*`]=*' {
-                    $key   = $line.Split('[]=', 4)[0]
-                    $hash  = $line.Split('[]=', 4)[1]
-                    $value = $line.Split('[]=', 4)[3]
+                    $key   = $line.Split($iniArrayHashSplitChars, 4)[0]
+                    $hash  = $line.Split($iniArrayHashSplitChars, 4)[1]
+                    $value = $line.Split($iniArrayHashSplitChars, 4)[3]
 
                     if ($null -eq $config[$key])
                     {
