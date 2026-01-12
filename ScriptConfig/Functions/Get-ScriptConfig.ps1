@@ -30,7 +30,8 @@ function Get-ScriptConfig
     param
     (
         # Specify the path to the configuration file. By default, the current
-        # script file path will be used with an appended '.config' extension.
+        # script file path will be used with an appended .ini, .json, .xml, or
+        # .config extension.
         [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [System.String]
@@ -96,7 +97,7 @@ function Get-ScriptConfig
     Write-Verbose "Load script configuration from file $Path with format $Format"
 
     # Load raw content, parse it later
-    $content = Get-Content -Path $Path -ErrorAction Stop
+    $content = Get-Content -Path $Path
 
     # Use custom functions to parse the files and return the config object
     switch ($Format)
