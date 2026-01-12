@@ -1,15 +1,18 @@
 
-$modulePath = Resolve-Path -Path "$PSScriptRoot\..\..\.." | Select-Object -ExpandProperty Path
-$moduleName = Resolve-Path -Path "$PSScriptRoot\..\.." | Get-Item | Select-Object -ExpandProperty BaseName
+BeforeAll {
 
-Remove-Module -Name $moduleName -Force -ErrorAction SilentlyContinue
-Import-Module -Name "$modulePath\$moduleName" -Force
+    $modulePath = Resolve-Path -Path "$PSScriptRoot\..\..\.." | Select-Object -ExpandProperty Path
+    $moduleName = Resolve-Path -Path "$PSScriptRoot\..\.." | Get-Item | Select-Object -ExpandProperty BaseName
 
-InModuleScope ScriptConfig {
+    Remove-Module -Name $moduleName -Force -ErrorAction SilentlyContinue
+    Import-Module -Name "$modulePath\$moduleName" -Force
+}
 
-    Describe 'ConvertFrom-ScriptConfigIni' {
+Describe 'ConvertFrom-ScriptConfigIni' {
 
-        It 'should be able to convert the example config file' {
+    It 'should be able to convert the example config file' {
+
+        InModuleScope $moduleName {
 
             # Arrange
             $content = Get-Content -Path "$PSScriptRoot\TestData\config.ini"
@@ -20,8 +23,11 @@ InModuleScope ScriptConfig {
             # Assert
             $config | Should -Not -BeNullOrEmpty
         }
+    }
 
-        It 'shloud be able to parse a string' {
+    It 'should be able to parse a string' {
+
+        InModuleScope $moduleName {
 
             # Arrange
             $content = Get-Content -Path "$PSScriptRoot\TestData\config.ini"
@@ -33,8 +39,11 @@ InModuleScope ScriptConfig {
             $config.MyString           | Should -Be 'This is a test INI config file!'
             $config.MyString.GetType() | Should -Be ([System.String])
         }
+    }
 
-        It 'shloud be able to parse an integer' {
+    It 'should be able to parse an integer' {
+
+        InModuleScope $moduleName {
 
             # Arrange
             $content = Get-Content -Path "$PSScriptRoot\TestData\config.ini"
@@ -48,8 +57,11 @@ InModuleScope ScriptConfig {
             $config.MyIntegerNegative           | Should -Be -153
             $config.MyIntegerNegative.GetType() | Should -Be ([System.Int32])
         }
+    }
 
-        It 'shloud be able to parse an boolean' {
+    It 'should be able to parse a boolean' {
+
+        InModuleScope $moduleName {
 
             # Arrange
             $content = Get-Content -Path "$PSScriptRoot\TestData\config.ini"
@@ -63,8 +75,11 @@ InModuleScope ScriptConfig {
             $config.MyBooleanFalse           | Should -BeFalse
             $config.MyBooleanFalse.GetType() | Should -Be ([System.Boolean])
         }
+    }
 
-        It 'shloud be able to parse an array' {
+    It 'should be able to parse an array' {
+
+        InModuleScope $moduleName {
 
             # Arrange
             $content = Get-Content -Path "$PSScriptRoot\TestData\config.ini"
@@ -78,8 +93,11 @@ InModuleScope ScriptConfig {
             $config.MyArray           | Should -Be $expectedArray
             $config.MyArray.GetType() | Should -Be ([System.Object[]])
         }
+    }
 
-        It 'shloud be able to parse an hashtable' {
+    It 'should be able to parse a hashtable' {
+
+        InModuleScope $moduleName {
 
             # Arrange
             $content = Get-Content -Path "$PSScriptRoot\TestData\config.ini"
