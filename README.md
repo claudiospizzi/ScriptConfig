@@ -40,6 +40,16 @@ The cmdlet supports multiple types. Depending on the used format, the types have
 | `Array`       | An array of strings can be specified.                                                    |
 | `Hashtable`   | A dictionary of key-value-pairs is supported too. The key and values will be a string.   |
 
+### Path Detection
+
+If the `-Path` parameter is not specified, the cmdlet will try to find a config file in the current working directory. It will search for the following files in the working directory of the script, this case with a script `example.ps1`.
+
+* `run.ps1.ini`
+* `run.ps1.json`
+* `run.ps1.xml`
+
+The idea behind the auth-detection is to have a slim controller script initialization with just `$config = Get-ScriptConfig` at the beginning of the script. The config file will be automatically detected and loaded.
+
 ### XML Format
 
 Inside an `XML` formatted config file, it's mandatory to specify the type, the key and the value of each setting. Thanks to this, the config file is type-safe.
