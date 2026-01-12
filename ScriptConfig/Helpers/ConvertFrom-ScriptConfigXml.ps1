@@ -16,7 +16,7 @@ function ConvertFrom-ScriptConfigXml
     param
     (
         # An array of strings with the XML file content.
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true)]
         [AllowEmptyString()]
         [System.String[]]
         $Content

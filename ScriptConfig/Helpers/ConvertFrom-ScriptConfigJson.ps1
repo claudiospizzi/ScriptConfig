@@ -16,7 +16,7 @@ function ConvertFrom-ScriptConfigJson
     param
     (
         # An array of strings with the JSON file content.
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true)]
         [AllowEmptyString()]
         [System.String[]]
         $Content

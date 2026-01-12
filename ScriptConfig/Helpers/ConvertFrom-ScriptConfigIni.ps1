@@ -16,7 +16,7 @@ function ConvertFrom-ScriptConfigIni
     param
     (
         # An array of strings with the INI file content.
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $true)]
         [AllowEmptyString()]
         [System.String[]]
         $Content
