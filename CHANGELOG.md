@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is mainly based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 3.2.0 - 2026-01-14
 
 * Added: Support for auto-detect the config file format based the content (Get-ScriptConfig)
 * Fixed: Fix INI loading for arrays and hash tables in PowerShell 7 (ConvertFrom-ScriptConfigIni)
