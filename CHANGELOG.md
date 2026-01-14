@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-* Fixed: Fix INI loading for arrays and hash tables in PowerShell 7 (ConvertFro-ScriptConfigIni)
+* Added: Support for auto-detect the config file format based the content (Get-ScriptConfig)
+* Fixed: Fix INI loading for arrays and hash tables in PowerShell 7 (ConvertFrom-ScriptConfigIni)
 
 ## 3.1.0 - 2019-09-16
 

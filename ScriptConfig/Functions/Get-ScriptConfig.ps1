@@ -81,29 +81,66 @@ function Get-ScriptConfig
         throw "Configuration file not found: $Path"
     }
 
+    # Load raw content, parse it later
+    $content = [System.String[]] (Get-Content -Path $Path)
+
+    # If the config file is actually empty, return an empty config object and
+    # exit the function.
+    if ($content.Count -eq 0 -or [System.String]::IsNullOrWhiteSpace(($content -join '')))
+    {
+        $config = [PSCustomObject] @{
+            PSTypeName = 'ScriptConfig.Configuration'
+        }
+        return $config
+    }
+
     # If the Format parameter was not specified, try to detect by the file
     # extension or use the default format JSON.
     if (-not $PSBoundParameters.ContainsKey('Format'))
     {
         switch -Wildcard ($Path)
         {
-            '*.ini'  { $Format = 'INI' }
-            '*.json' { $Format = 'JSON' }
-            '*.xml'  { $Format = 'XML' }
-            default  { $Format = 'JSON' }
+            '*.ini'
+            {
+                $Format = 'INI'
+            }
+
+            '*.json'
+            {
+                $Format = 'JSON'
+            }
+
+            '*.xml'
+            {
+                $Format = 'XML'
+            }
+
+            default
+            {
+                $contentFirstLine = $content[0].TrimStart()
+                if ($contentFirstLine.StartsWith('<'))
+                {
+                    $Format = 'XML'
+                }
+                elseif ($contentFirstLine.StartsWith('{') -or $contentFirstLine.StartsWith('['))
+                {
+                    $Format = 'JSON'
+                }
+                else
+                {
+                    $Format = 'INI'
+                }
+            }
         }
     }
 
     Write-Verbose "Load script configuration from file $Path with format $Format"
 
-    # Load raw content, parse it later
-    $content = Get-Content -Path $Path
-
     # Use custom functions to parse the files and return the config object
     switch ($Format)
     {
-        'XML'  { ConvertFrom-ScriptConfigXml -Content $content }
-        'JSON' { ConvertFrom-ScriptConfigJson -Content $content }
         'INI'  { ConvertFrom-ScriptConfigIni -Content $content }
+        'JSON' { ConvertFrom-ScriptConfigJson -Content $content }
+        'XML'  { ConvertFrom-ScriptConfigXml -Content $content }
     }
 }
