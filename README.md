@@ -9,7 +9,46 @@ PowerShell Module to handle configuration files for PowerShell controller script
 
 ## Introduction
 
-With the ScriptConfig module, configuration data can be loaded into a PowerShell controller script from a dedicated config file. Thanks to the module, it is no longer necessary to hard-code or parameter-pass the configuration data. Especially useful for scripts, which run unattended. The module support `XML`, `JSON` and `INI` formatted config files. Works great in cooperation with the [ScriptLogger] module to improve controller scripts.
+With the ScriptConfig module, configuration data can be loaded into a PowerShell controller script from a dedicated config file. Thanks to the module, it is no longer necessary to hard-code or parameter-pass the configuration data. Especially useful for scripts, which run unattended. The module support `XML`, `JSON` and `INI` formatted config files. This module works great in cooperation with the [ScriptLogger] module to improve controller scripts.
+
+## Quick Start
+
+This example demonstrates using ScriptConfig with the [ScriptLogger] module to create a robust controller script with file-based configuration and logging.
+
+**Setup:**
+
+* Script file: `run.ps1`
+* Configuration file: `run.ps1.config` (auto-detected, any supported format)
+* Log file: `run.ps1.log` (auto-created)
+
+For this example, create a simple INI config file with: `MyNumber=42`. For more details on the behavior see the comment sections in the script below. The `Start-ScriptLogger` and `Get-ScriptConfig` can be parameterized further as needed.
+
+```powershell
+try
+{
+    # Start the script logger by overriding the Write-* functions and log only
+    # to the log file and console (no event and system log entries).
+    Start-ScriptLogger -NoEventLog -OverrideStream $ExecutionContext.SessionState
+
+    # Load the script configuration from the auto-detect config file with the
+    # auto-detected config format (INI, JSON, XML).
+    $config = Get-ScriptConfig
+
+    # Perform your operations using the configuration and log messages...
+    Write-Verbose 'Try an impossible operation...'
+    $config.MyNumber / 0
+}
+catch
+{
+    # In case of any error, log the error record with stack trace.
+    Write-ErrorLog -ErrorRecord $_ -IncludeStackTrace
+}
+finally
+{
+    # Clean-up the logger at the end.
+    Stop-ScriptLogger
+}
+```
 
 ## Features
 
