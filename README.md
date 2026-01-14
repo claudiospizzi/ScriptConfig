@@ -24,6 +24,18 @@ This example demonstrates using ScriptConfig with the [ScriptLogger] module to c
 For this example, create a simple INI config file with: `MyNumber=42`. For more details on the behavior see the comment sections in the script below. The `Start-ScriptLogger` and `Get-ScriptConfig` can be parameterized further as needed.
 
 ```powershell
+#requires -Module ScriptConfig, ScriptLogger
+
+<#
+    .SYNOPSIS
+        Example PowerShell controller script using ScriptConfig and ScriptLogger.
+
+    .DESCRIPTION
+        This script demonstrates loading configuration from a file and logging
+        operations. It uses ScriptConfig to load settings and ScriptLogger to
+        log messages and errors.
+#>
+
 try
 {
     # Start the script logger by overriding the Write-* functions and log only
@@ -51,6 +63,8 @@ finally
 ```
 
 ## Features
+
+The following command will load the configuration data:
 
 * **Get-ScriptConfig**  
   Loads the configuration from a config file. The path and format can be specified with parameters.
