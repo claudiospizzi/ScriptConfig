@@ -1,3 +1,6 @@
+[CmdletBinding()]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingWriteHost', '', Justification = 'Integration test output')]
+param ()
 
 # Load the default configuration file in XML format
 $Config = Get-ScriptConfig -Format 'XML'
