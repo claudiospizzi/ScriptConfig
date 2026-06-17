@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is mainly based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+* Changed: Optimize module loading time by change the dot-sourcing mode
+
 ## 3.2.0 - 2026-01-14
 
 * Added: Support for auto-detect the config file format based the content (Get-ScriptConfig)
