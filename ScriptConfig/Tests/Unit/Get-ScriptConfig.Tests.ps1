@@ -93,7 +93,7 @@ Describe 'Get-ScriptConfig' {
                 Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.ini" | Out-Null
 
                 # Assert
-                Assert-MockCalled 'ConvertFrom-ScriptConfigIni' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
+                Should-Invoke -CommandName 'ConvertFrom-ScriptConfigIni' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
             }
 
             It 'should call the INI function if INI format is specified' {
@@ -102,7 +102,7 @@ Describe 'Get-ScriptConfig' {
                 Get-ScriptConfig -Path "$PSScriptRoot\TestData\config" -Format 'INI' | Out-Null
 
                 # Assert
-                Assert-MockCalled 'ConvertFrom-ScriptConfigIni' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
+                Should-Invoke -CommandName 'ConvertFrom-ScriptConfigIni' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
             }
         }
 
@@ -121,7 +121,7 @@ Describe 'Get-ScriptConfig' {
                 Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.json" | Out-Null
 
                 # Assert
-                Assert-MockCalled 'ConvertFrom-ScriptConfigJson' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
+                Should-Invoke -CommandName 'ConvertFrom-ScriptConfigJson' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
             }
 
             It 'should call the JSON function if JSON format is specified' {
@@ -130,7 +130,7 @@ Describe 'Get-ScriptConfig' {
                 Get-ScriptConfig -Path "$PSScriptRoot\TestData\config" -Format 'JSON' | Out-Null
 
                 # Assert
-                Assert-MockCalled 'ConvertFrom-ScriptConfigJson' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
+                Should-Invoke -CommandName 'ConvertFrom-ScriptConfigJson' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
             }
         }
 
@@ -149,7 +149,7 @@ Describe 'Get-ScriptConfig' {
                 Get-ScriptConfig -Path "$PSScriptRoot\TestData\config.xml" | Out-Null
 
                 # Assert
-                Assert-MockCalled 'ConvertFrom-ScriptConfigXml' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
+                Should-Invoke -CommandName 'ConvertFrom-ScriptConfigXml' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
             }
 
             It 'should call the XML function if XML format is specified' {
@@ -158,7 +158,7 @@ Describe 'Get-ScriptConfig' {
                 Get-ScriptConfig -Path "$PSScriptRoot\TestData\config" -Format 'XML' | Out-Null
 
                 # Assert
-                Assert-MockCalled 'ConvertFrom-ScriptConfigXml' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
+                Should-Invoke -CommandName 'ConvertFrom-ScriptConfigXml' -ModuleName 'ScriptConfig' -Scope 'It' -Times 1 -Exactly
             }
         }
     }
